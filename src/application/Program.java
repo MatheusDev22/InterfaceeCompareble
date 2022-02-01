@@ -1,30 +1,32 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import entity.Employee;
+
 public class Program {
 
 	public static void main (String[] args) {
 		
-		List<String> list = new ArrayList<>();
-		String path = "C:\\temp\\in.txt";
+		List<Employee> list = new ArrayList<>();
+		String path = "C:\\temp\\inn.txt";
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path) )){
 			
-			String name = br.readLine();
-			while (name != null) {
-				list.add(name);
-				name = br.readLine();
+			String employeeCsv = br.readLine();
+			while (employeeCsv != null) {
+				String[] fields = employeeCsv.split(",");
+				list.add(new Employee(fields[0], Double.parseDouble(fields[1])) );
+				employeeCsv = br.readLine();
 			}
 			Collections.sort(list);//Ordenar coleção
-			for (String s : list) {
-				System.out.println(s);
+			for (Employee emp : list) {
+				System.out.println(emp.getName() + ", " + emp.getSalary() );
 			}
 		}	catch (IOException e) {
 				System.out.println("Error: " + e.getMessage() );
